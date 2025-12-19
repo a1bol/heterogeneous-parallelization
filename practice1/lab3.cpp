@@ -1,60 +1,69 @@
-#include <iostream>
-#include <cstdlib>
-#include <ctime>
-#include <omp.h>
+#include <iostream> // Подключение библиотеки ввода-вывода (cout, cin)
+#include <cstdlib>  // Подключение стандартной библиотеки (функции rand, srand, malloc)
+#include <ctime>    // Подключение библиотеки времени (функция time для инициализации рандома)
+#include <omp.h>    // Подключение библиотеки OpenMP для параллельного программирования
 
-using namespace std;
+using namespace std; // Использование стандартного пространства имен (чтобы не писать std:: перед cout)
 
-// Function to find the mean of array elements (sequential version for logic check usually, but not strictly required by prompt parallel part)
-// Requirement 2: Write a function for finding the mean of array elements.
+// Функция для вычисления среднего значения элементов массива (последовательная версия)
+// Используется для проверки логики или как альтернатива параллельной версии
 double calculateMean(int* arr, int size) {
-    long long sum = 0;
+    long long sum = 0; // Переменная для хранения суммы элементов (long long чтобы избежать переполнения)
+    // Проход по всем элементам массива
     for (int i = 0; i < size; ++i) {
-        sum += arr[i];
+        sum += arr[i]; // Добавление значения текущего элемента к сумме
     }
+    // Возвращаем среднее значение (сумма деленная на количество), преобразуя сумму в double для точности
     return static_cast<double>(sum) / size;
 }
 
 int main() {
-    // Seed for random number generation
+    // Инициализация генератора случайных чисел текущим временем
+    // Это нужно, чтобы при каждом запуске числа были разными
     srand(static_cast<unsigned>(time(0)));
 
-    int size;
-    cout << "Enter the size of the array: ";
+    int size; // Переменная для хранения размера массива
+    cout << "Enter the size of the array: "; // Вывод приглашения для ввода размера
+    // Считывание размера с проверкой: удалось ли считать число и положительное ли оно
     if (!(cin >> size) || size <= 0) {
-        cerr << "Invalid size. Please enter a positive integer." << endl;
-        return 1;
+        cerr << "Invalid size. Please enter a positive integer." << endl; // Вывод ошибки в поток ошибок
+        return 1; // Завершение программы с кодом ошибки 1
     }
 
-    // 1. Create a dynamic array using pointers
+    // 1. Создание динамического массива с помощью указателей
+    // Оператор new выделяет память в куче (heap) для 'size' элементов типа int
     int* arr = new int[size];
 
-    // 2. Fill the array with random numbers
-    cout << "Filling array with random numbers..." << endl;
+    // 2. Заполнение массива случайными числами
+    cout << "Filling array with random numbers..." << endl; // Сообщение пользователю
+    // Цикл от 0 до size-1
     for (int i = 0; i < size; ++i) {
-        arr[i] = rand() % 100; // Random numbers between 0 and 99
+        arr[i] = rand() % 100; // Присваивание случайного значения от 0 до 99
     }
 
-    // 3. Parallel calculation of average
-    // a. Use #pragma omp parallel for reduction(+:sum) for parallel summation
-    long long sum = 0;
+    // 3. Параллельное вычисление суммы и среднего значения с использованием OpenMP
+    long long sum = 0; // Переменная для накопления суммы
     
+    // a. Добавление директивы OpenMP
+    // #pragma omp parallel for - распараллеливает следующий за ней цикл for
+    // reduction(+:sum) - указывает, что переменная sum является редукционной для операции сложения (+)
+    // Это значит, что каждый поток будет считать свою локальную сумму, а в конце они объединятся
     #pragma omp parallel for reduction(+:sum)
     for (int i = 0; i < size; ++i) {
-        sum += arr[i];
+        sum += arr[i]; // Каждый поток добавляет элементы своей части массива к sum
     }
 
+    // Вычисление среднего значения: сумму делим на количество элементов
     double mean = static_cast<double>(sum) / size;
 
-    cout << "Total Sum (Parallel): " << sum << endl;
-    cout << "Average (Parallel): " << mean << endl;
+    // Вывод полученных результатов
+    cout << "Total Sum: " << sum << endl; // Вывод общей суммы
+    cout << "Average (Mean): " << mean << endl; // Вывод среднего значения
 
-    // Optional: Call the sequential function to demonstrate it exists as per point 2
-    // cout << "Average (Sequential Function): " << calculateMean(arr, size) << endl;
-
-    // 4. Free memory
+    // 4. Освобождение памяти
+    // Оператор delete[] освобождает память, выделенную под массив оператором new[]
     delete[] arr;
-    cout << "Memory successfully freed." << endl;
+    cout << "Memory successfully freed." << endl; // Сообщение об успешном освобождении памяти
 
-    return 0;
+    return 0; // Успешное завершение программы
 }
