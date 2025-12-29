@@ -190,7 +190,7 @@ int main() {
 
     // Цикл по всем размерам массивов
     for (int n : sizes) {
-        cout << "\n--- Array Size (Размер массива): " << n << " ---" << endl;
+        cout << "\n--- Array Size: " << n << " ---" << endl;
         
         // Создаем массив указанного размера
         vector<int> data(n);
@@ -199,14 +199,14 @@ int main() {
         }
 
         // Запуск последовательных сортировок (передаем копии массива data)
-        measure(bubbleSort, data, "Sequential Bubble Sort (Послед. Пузырек)");
-        measure(selectionSort, data, "Sequential Selection Sort (Послед. Выбор)");
-        measure(insertionSort, data, "Sequential Insertion Sort (Послед. Вставка)");
+        measure(bubbleSort, data, "Sequential Bubble Sort");
+        measure(selectionSort, data, "Sequential Selection Sort");
+        measure(insertionSort, data, "Sequential Insertion Sort");
 
         // Запуск параллельных сортировок
-        measure(parallelBubbleSort, data, "Parallel Bubble Sort (Парал. Пузырек)");
-        measure(parallelSelectionSort, data, "Parallel Selection Sort (Парал. Выбор)");
-        measure(parallelInsertionSort, data, "Parallel Insertion Sort (Парал. Вставка - обертка)");
+        measure(parallelBubbleSort, data, "Parallel Bubble Sort");
+        measure(parallelSelectionSort, data, "Parallel Selection Sort");
+        measure(parallelInsertionSort, data, "Parallel Insertion Sort (Wrapper)");
     }
 
     return 0; // Завершение программы

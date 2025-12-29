@@ -44,7 +44,7 @@ int main() {
     srand(static_cast<unsigned int>(time(0)));
     
     const int SIZE = 5000000; // 5 миллионов элементов
-    cout << "Генерация массива из " << SIZE << " целых чисел..." << endl;
+    cout << "Generating array of " << SIZE << " integers..." << endl;
     
     // Выделение памяти под вектор
     vector<int> arr(SIZE);
@@ -57,7 +57,7 @@ int main() {
     double seqAvg, parAvg;
 
     // --- Запуск последовательной версии ---
-    cout << "\nЗапуск последовательного вычисления..." << endl;
+    cout << "\nStarting sequential calculation..." << endl;
     auto start = chrono::high_resolution_clock::now();
     
     seqAvg = sequentialAverage(arr);
@@ -65,12 +65,12 @@ int main() {
     auto end = chrono::high_resolution_clock::now();
     chrono::duration<double> seqDuration = end - start;
 
-    cout << "Последовательные результаты:" << endl;
-    cout << "Среднее: " << seqAvg << endl;
-    cout << "Время: " << seqDuration.count() << " секунд" << endl;
+    cout << "Sequential results:" << endl;
+    cout << "Average: " << seqAvg << endl;
+    cout << "Time: " << seqDuration.count() << " seconds" << endl;
 
     // --- Запуск параллельной версии (Reduction) ---
-    cout << "\nЗапуск параллельного вычисления (OpenMP Reduction)..." << endl;
+    cout << "\nStarting parallel calculation (OpenMP Reduction)..." << endl;
     start = chrono::high_resolution_clock::now();
     
     parAvg = parallelAverage(arr);
@@ -78,12 +78,12 @@ int main() {
     end = chrono::high_resolution_clock::now();
     chrono::duration<double> parDuration = end - start;
 
-    cout << "Параллельные результаты:" << endl;
-    cout << "Среднее: " << parAvg << endl;
-    cout << "Время: " << parDuration.count() << " секунд" << endl;
+    cout << "Parallel results:" << endl;
+    cout << "Average: " << parAvg << endl;
+    cout << "Time: " << parDuration.count() << " seconds" << endl;
     
     // Вывод ускорения
-    cout << "Ускорение: " << seqDuration.count() / parDuration.count() << "x" << endl;
+    cout << "Speedup: " << seqDuration.count() / parDuration.count() << "x" << endl;
 
     return 0;
 }

@@ -7,9 +7,18 @@ using namespace std; // Использование стандартного пр
 // Задание 1: Динамическое выделение массива, заполнение случайными числами, вычисление среднего
 // Цель: Продемонстрировать работу с динамической памятью (new/delete) в C++
 
+#ifdef _WIN32
+#include <windows.h>
+#endif
+
 int main() {
     // 1. Инициализация генератора случайных чисел
     // Используем time(0) в качестве "зерна" (seed), чтобы при каждом запуске числа были разными
+    // Fix encoding for Windows
+    #ifdef _WIN32
+        SetConsoleOutputCP(65001);
+    #endif
+
     srand(static_cast<unsigned int>(time(0)));
 
     const int SIZE = 50000; // Константа размера массива
@@ -21,14 +30,14 @@ int main() {
     
     // Хорошей практикой является проверка, успешно ли выделилась память (хотя new обычно выбрасывает исключение)
     if (!arr) {
-        cerr << "Ошибка выделения памяти!" << endl; // Вывод сообщения об ошибке
+        cerr << "Memory allocation error!" << endl; // Error message
         return 1; // Завершение программы с кодом ошибки
     }
 
     // 3. Заполнение массива и подсчет суммы
     long long sum = 0; // Используем long long, чтобы избежать переполнения при сложении большого количества чисел
     
-    cout << "Заполнение массива случайными числами..." << endl;
+    cout << "Filling array with random numbers..." << endl;
     for (int i = 0; i < SIZE; ++i) {
         // Генерация случайного числа от 1 до 100
         // rand() % 100 дает 0..99, +1 сдвигает диапазон к 1..100
@@ -41,16 +50,16 @@ int main() {
     double average = static_cast<double>(sum) / SIZE;
 
     // 5. Вывод результатов
-    cout << "Результаты Задания 1:" << endl;
-    cout << "Размер массива: " << SIZE << endl;
-    cout << "Сумма элементов: " << sum << endl;
-    cout << "Среднее значение: " << average << endl;
+    cout << "Results of Task 1:" << endl;
+    cout << "Array size: " << SIZE << endl;
+    cout << "Sum of elements: " << sum << endl;
+    cout << "Average value: " << average << endl;
 
     // 6. Освобождение памяти
     // Очень важно освобождать память, выделенную через new[], с помощью delete[]
     // Если этого не сделать, произойдет утечка памяти (memory leak)
     delete[] arr;
-    cout << "Память успешно освобождена." << endl;
+    cout << "Memory successfully freed." << endl;
 
     return 0; // Успешное завершение программы
 }

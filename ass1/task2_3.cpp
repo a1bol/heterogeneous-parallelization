@@ -66,7 +66,7 @@ int main() {
     srand(static_cast<unsigned int>(time(0)));
     
     const int SIZE = 1000000; // Размер массива: 1 миллион элементов
-    cout << "Генерация массива из " << SIZE << " целых чисел..." << endl;
+    cout << "Generating array of " << SIZE << " integers..." << endl;
     
     // Создаем вектор размера SIZE
     vector<int> arr(SIZE);
@@ -81,7 +81,7 @@ int main() {
     int parMin, parMax;
 
     // --- Задание 2: Последовательное измерение ---
-    cout << "\nЗапуск последовательного поиска..." << endl;
+    cout << "\nStarting sequential search..." << endl;
     
     // Засекаем время начала
     auto start = chrono::high_resolution_clock::now();
@@ -94,12 +94,12 @@ int main() {
     // Вычисляем длительность в секундах (double)
     chrono::duration<double> seqDuration = end - start;
 
-    cout << "Последовательные результаты:" << endl;
-    cout << "Мин: " << seqMin << ", Макс: " << seqMax << endl;
-    cout << "Время: " << seqDuration.count() << " секунд" << endl;
+    cout << "Sequential results:" << endl;
+    cout << "Min: " << seqMin << ", Max: " << seqMax << endl;
+    cout << "Time: " << seqDuration.count() << " seconds" << endl;
 
     // --- Задание 3: Параллельное измерение ---
-    cout << "\nЗапуск параллельного поиска (OpenMP)..." << endl;
+    cout << "\nStarting parallel search (OpenMP)..." << endl;
     
     start = chrono::high_resolution_clock::now();
     
@@ -108,12 +108,12 @@ int main() {
     end = chrono::high_resolution_clock::now();
     chrono::duration<double> parDuration = end - start;
 
-    cout << "Параллельные результаты (OpenMP):" << endl;
-    cout << "Мин: " << parMin << ", Макс: " << parMax << endl;
-    cout << "Время: " << parDuration.count() << " секунд" << endl;
+    cout << "Parallel results (OpenMP):" << endl;
+    cout << "Min: " << parMin << ", Max: " << parMax << endl;
+    cout << "Time: " << parDuration.count() << " seconds" << endl;
     
     // Вычисление ускорения (Speedup = T_seq / T_par)
-    cout << "Ускорение: " << seqDuration.count() / parDuration.count() << "x" << endl;
+    cout << "Speedup: " << seqDuration.count() / parDuration.count() << "x" << endl;
 
     return 0;
 }
