@@ -39,3 +39,11 @@
 *   **[Практика 4 (practice4)](practice4/README.md)**
     *   **Описание**: Оптимизация памяти GPU. Использование Shared Memory для ускорения редукции и сортировки.
     *   **Файлы**: `reduction.cu`, `bubble_sort.cu`, `data_generator.cu`
+
+*   **[Практика 5 (practice5)](practice5/README.md)**
+    *   **Описание**: Параллельные структуры данных на GPU. Реализация стека и очереди с использованием атомарных операций CUDA.
+    *   **Файлы**: `stack.cu`, `queue.cu`
+
+*   **[Практика 6 (practice6)](practice6/README.md)**
+    *   **Описание**: Программирование на OpenCL. Кросс-платформенное сложение векторов и умножение матриц (CPU/GPU).
+    *   **Файлы**: `vector_add.cpp`, `vector_add.cl`, `matrix_mul.cpp`, `matrix_mul.cl`
