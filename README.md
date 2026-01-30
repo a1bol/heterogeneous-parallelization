@@ -47,3 +47,7 @@
 *   **[Практика 6 (practice6)](practice6/README.md)**
     *   **Описание**: Программирование на OpenCL. Кросс-платформенное сложение векторов и умножение матриц (CPU/GPU).
     *   **Файлы**: `vector_add.cpp`, `vector_add.cl`, `matrix_mul.cpp`, `matrix_mul.cl`
+
+*   **[Практика 7 (practice7)](practice7/README.md)**
+    *   **Описание**: Редукция и сканирование на GPU. Реализация параллельной суммы и префиксной суммы с использованием Shared Memory.
+    *   **Файлы**: `reduction.cu`, `scan.cu`
